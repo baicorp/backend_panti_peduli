@@ -1,18 +1,22 @@
-const express = require("express");
-const routes = require("./routes");
+import express from 'express';
+import fileUpload from 'express-fileupload';
+import profileRoute from './routes/profileRoutes.js';
+import articleRoute from './routes/articleRoutes.js'
+import cors from 'cors';
 
-const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const app = express()
 
-// app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(fileUpload());
 app.use(express.json());
+app.use(profileRoute);
+app.use(articleRoute);
 
-app.get("/", (req, res) => {
-  res.json({ message: "test success" });
+app.get('/', (req, res) => {
+    return res.status(200).json({ message: "Successfully connected to server" })
 });
 
-app.use(routes);
-
 app.listen(port, () => {
-  console.log(`Panti Peduli listening at http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });

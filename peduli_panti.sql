@@ -42,8 +42,8 @@ CREATE TABLE `article` (
 -- Dumping data untuk tabel `article`
 --
 
-INSERT INTO `article` (`id`, `title`, `author`, `description`, `content`, `image`, `createdAt`, `updatedAt`) VALUES
-(15, 'Menyayangi Anak Yatim', 'Dimas Prayoga', 'Menyayangi Anak Yatim: Sebuah Tindakan Manusia yang Mulia', 'Kehadiran anak yatim dalam masyarakat adalah sebuah tantangan bagi kita semua untuk menunjukkan kepedulian dan kasih sayang. Anak-anak ini telah kehilangan salah satu atau kedua orang tua mereka dan memerlukan perhatian ekstra serta kehangatan dari lingkungan sekitarnya. Menyayangi anak yatim bukan hanya suatu kewajiban, tetapi juga merupakan ajaran moral yang sangat dihargai dalam setiap agama dan kemanusiaan.', '1702424634345-Screenshot_2023-12-09-22-23-24-685_com.EmasDigi.jpg', '2023-12-13 06:43:54', '2023-12-13 06:43:54');
+-- INSERT INTO `article` (`id`, `title`, `author`, `description`, `content`, `image`, `createdAt`, `updatedAt`) VALUES
+-- (15, 'Menyayangi Anak Yatim', 'Dimas Prayoga', 'Menyayangi Anak Yatim: Sebuah Tindakan Manusia yang Mulia', 'Kehadiran anak yatim dalam masyarakat adalah sebuah tantangan bagi kita semua untuk menunjukkan kepedulian dan kasih sayang. Anak-anak ini telah kehilangan salah satu atau kedua orang tua mereka dan memerlukan perhatian ekstra serta kehangatan dari lingkungan sekitarnya. Menyayangi anak yatim bukan hanya suatu kewajiban, tetapi juga merupakan ajaran moral yang sangat dihargai dalam setiap agama dan kemanusiaan.', '1702424634345-Screenshot_2023-12-09-22-23-24-685_com.EmasDigi.jpg', '2023-12-13 06:43:54', '2023-12-13 06:43:54');
 
 -- --------------------------------------------------------
 
@@ -80,9 +80,9 @@ CREATE TABLE `profile` (
 -- Dumping data untuk tabel `profile`
 --
 
-INSERT INTO `profile` (`id`, `nama_panti`, `notelp_panti`, `nama_pengurus`, `nama_pemilik`, `notelp_pemilik`, `deskripsi_panti`, `alamat_panti`, `provinsi`, `kabupaten`, `kecamatan`, `program_panti`, `deskripsi_program`, `kebutuhan_panti`, `deskripsi_kebutuhan`, `jumlah_pengurus`, `jumlah_anaklaki`, `jumlah_anakpr`, `jumlah_anak`, `image`, `createdAt`, `updatedAt`) VALUES
-(1, 'nana', '0819229', 'nanana', 'kakaka', '08288281', 'kakaskasjdkaashahs', 'lengkong', 'jawabrat', 'kuningan', 'garawangi', 'kswkskasaodsancckcocnkcno', 'kaoskjqownnxbga', 'butuh relawna', 'kaksksk hd', '10', '5', '5', '10', '1702314630833_61cc54bb0d827.jpg', '2023-12-11 17:10:30', '2023-12-11 17:10:30'),
-(2, 'graha yatim duafa', '08123456789 ', 'asep', 'usep', '08976865432', 'yayasan', 'kuningan', 'jawa barat', 'kuningan', 'kuningan ', 'program yayasan', 'program program murojaah', 'butuh al-quran', 'membutuhkan al-quran', '5', '5 ', '5', '10', '1702334099442_8dcdcd8e6a315c26bb93a78edda9ac63_trash-talk-cover.jpg', '2023-12-11 22:34:59', '2023-12-11 22:34:59');
+-- INSERT INTO `profile` (`id`, `nama_panti`, `notelp_panti`, `nama_pengurus`, `nama_pemilik`, `notelp_pemilik`, `deskripsi_panti`, `alamat_panti`, `provinsi`, `kabupaten`, `kecamatan`, `program_panti`, `deskripsi_program`, `kebutuhan_panti`, `deskripsi_kebutuhan`, `jumlah_pengurus`, `jumlah_anaklaki`, `jumlah_anakpr`, `jumlah_anak`, `image`, `createdAt`, `updatedAt`) VALUES
+-- (1, 'nana', '0819229', 'nanana', 'kakaka', '08288281', 'kakaskasjdkaashahs', 'lengkong', 'jawabrat', 'kuningan', 'garawangi', 'kswkskasaodsancckcocnkcno', 'kaoskjqownnxbga', 'butuh relawna', 'kaksksk hd', '10', '5', '5', '10', '1702314630833_61cc54bb0d827.jpg', '2023-12-11 17:10:30', '2023-12-11 17:10:30'),
+-- (2, 'graha yatim duafa', '08123456789 ', 'asep', 'usep', '08976865432', 'yayasan', 'kuningan', 'jawa barat', 'kuningan', 'kuningan ', 'program yayasan', 'program program murojaah', 'butuh al-quran', 'membutuhkan al-quran', '5', '5 ', '5', '10', '1702334099442_8dcdcd8e6a315c26bb93a78edda9ac63_trash-talk-cover.jpg', '2023-12-11 22:34:59', '2023-12-11 22:34:59');
 
 --
 -- Indexes for dumped tables
@@ -108,14 +108,29 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT untuk tabel `article`
 --
 ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+CREATE TABLE users (
+  id VARCHAR(255) PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  username VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE article
+  ADD COLUMN user_id VARCHAR(255) NOT NULL,
+  ADD CONSTRAINT fk_article_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE profile
+  ADD COLUMN user_id VARCHAR(255) NOT NULL,
+  ADD CONSTRAINT fk_profile_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

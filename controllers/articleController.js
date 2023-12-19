@@ -10,6 +10,20 @@ export const getArticle = (req, res) => {
   });
 };
 
+export const getArticleByUserId = (req, res) => {
+  const userId = req.params.userId;
+  // const sql = "SELECT * FROM article WHERE user_id = ?";
+  const sql = "SELECT * FROM article WHERE user_id = ? ORDER BY createdAt DESC";
+  db.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error("Error executing SQL query:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      res.status(200).json(results);
+    }
+  });
+};
+
 export const getArticleById = (req, res) => {
   const id = req.params.id;
   const sql = `SELECT * FROM article WHERE id=${id}`;

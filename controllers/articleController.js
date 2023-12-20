@@ -1,7 +1,7 @@
 import db from "../database.js";
 
 export const getArticle = (req, res) => {
-  const sql = "SELECT * FROM article";
+  const sql = "SELECT * FROM article ORDER BY createdAt DESC";
   db.query(sql, (err, data) => {
     // return data or error msg
     return !err
@@ -12,9 +12,21 @@ export const getArticle = (req, res) => {
 
 export const getArticleByUserId = (req, res) => {
   const userId = req.params.userId;
-  // const sql = "SELECT * FROM article WHERE user_id = ?";
   const sql = "SELECT * FROM article WHERE user_id = ? ORDER BY createdAt DESC";
   db.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error("Error executing SQL query:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      res.status(200).json(results);
+    }
+  });
+};
+
+export const getArticleHome = (req, res) => {
+  // const sql = "SELECT * FROM article ORDER BY createdAt DESC";
+  const sql = "SELECT * FROM article ORDER BY createdAt DESC LIMIT 3";
+  db.query(sql, (err, results) => {
     if (err) {
       console.error("Error executing SQL query:", err);
       res.status(500).json({ error: "Internal Server Error" });

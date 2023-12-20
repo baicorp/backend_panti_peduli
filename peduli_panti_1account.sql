@@ -32,7 +32,6 @@ CREATE TABLE `article` (
   `title` varchar(255) DEFAULT NULL,
   `author` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `content` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),

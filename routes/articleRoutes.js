@@ -6,11 +6,13 @@ import {
   updateArticle,
   deleteArticle,
   getArticleByUserId,
+  getArticleHome,
 } from "../controllers/articleController.js";
 
 const router = express.Router();
 
 router.get("/articles", getArticle);
+router.get("/articles/home", getArticleHome);
 router.get("/articles/:id", getArticleById);
 router.get("/articles/user/:userId", getArticleByUserId);
 router.post("/articles", addNewArticle);

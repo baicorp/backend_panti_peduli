@@ -12,10 +12,26 @@ export const getProfile = (req, res) => {
 
 export const getProfileById = (req, res) => {
   const id = req.params.id;
-  const sql = `SELECT * FROM profile WHERE id=${id}`;
-  db.query(sql, (err, data) => {
+  const sql = "SELECT * FROM profile WHERE id = ?";
+  db.query(sql, [id], (err, data) => {
     if (err) {
-      res.status(500).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
+    }
+    // return data or error msg
+    return data.length > 0
+      ? res.status(200).json(data)
+      : res
+          .status(404)
+          .json({ message: "No profile found with the given ID." });
+  });
+};
+
+export const getProfileByUserId = (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM profile WHERE user_id = ?";
+  db.query(sql, [id], (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
     }
     // return data or error msg
     return data.length > 0
@@ -174,4 +190,61 @@ export const deleteProfile = (req, res) => {
           });
     }
   });
+};
+
+export const addCertificate = (req, res) => {
+  const img = req.files.image;
+  const imgName = `${Date.now()}-${img.name}`;
+  img.mv(`./public/images/certificate/${imgName}`);
+
+  const userId = req.params.userId;
+
+  const data = {
+    sertifikat_panti: imgName,
+    user_id: userId,
+  };
+
+  const imgErrorMsg =
+    !req.files || Object.keys(req.files).length === 0
+      ? "No files were uploaded."
+      : null;
+
+  if (imgErrorMsg) {
+    return res.status(400).json({ imgErrorMsg });
+  } else {
+    const sql = "UPDATE profile SET sertifikat_panti = ? WHERE user_id = ?";
+    db.query(sql, data, (err, result) => {
+      // return data or error msg
+      return err
+        ? res.status(500).json({ error: err.message })
+        : res.status(200).json({
+            message: "Data was updated successfully.",
+            affectedRows: result.affectedRows,
+          });
+    });
+  }
+};
+
+export const getPorfileByLoc = (req, res) => {
+  const { lokasi } = req.query;
+
+  if (lokasi === "") {
+    const sql = "SELECT * FROM profile";
+    db.query(sql, (err, data) => {
+      // return data or error msg
+      return !err
+        ? res.status(200).json(data)
+        : res.status(500).json({ error: err.message });
+    });
+  } else {
+    // Menggunakan parameterized query untuk mencegah SQL injection
+    const sql = "SELECT * FROM profile WHERE kabupaten = ?";
+
+    db.query(sql, [lokasi], (err, data) => {
+      // return data or error msg
+      return !err
+        ? res.status(200).json(data)
+        : res.status(500).json({ error: err.message });
+    });
+  }
 };

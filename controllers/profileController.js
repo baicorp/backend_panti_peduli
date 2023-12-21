@@ -192,6 +192,39 @@ export const deleteProfile = (req, res) => {
   });
 };
 
+// export const addCertificate = (req, res) => {
+//   const img = req.files.image;
+//   const imgName = `${Date.now()}-${img.name}`;
+//   img.mv(`./public/images/certificate/${imgName}`);
+
+//   const userId = req.params.userId;
+
+//   const data = {
+//     sertifikat_panti: imgName,
+//     user_id: userId,
+//   };
+
+//   const imgErrorMsg =
+//     !req.files || Object.keys(req.files).length === 0
+//       ? "No files were uploaded."
+//       : null;
+
+//   if (imgErrorMsg) {
+//     return res.status(400).json({ imgErrorMsg });
+//   } else {
+//     const sql = "UPDATE profile SET sertifikat_panti = ? WHERE user_id = ?";
+//     db.query(sql, data, (err, result) => {
+//       // return data or error msg
+//       return err
+//         ? res.status(500).json({ error: err.message })
+//         : res.status(200).json({
+//             message: "Data was updated successfully.",
+//             affectedRows: result.affectedRows,
+//           });
+//     });
+//   }
+// };
+
 export const addCertificate = (req, res) => {
   const img = req.files.image;
   const imgName = `${Date.now()}-${img.name}`;
@@ -199,10 +232,7 @@ export const addCertificate = (req, res) => {
 
   const userId = req.params.userId;
 
-  const data = {
-    sertifikat_panti: imgName,
-    user_id: userId,
-  };
+  const data = [imgName, userId]; // Use an array for the values
 
   const imgErrorMsg =
     !req.files || Object.keys(req.files).length === 0

@@ -18,7 +18,9 @@ app.use(articleRoute);
 app.use(usersRoutes);
 
 app.get("/", (req, res) => {
-  return res.status(200).json({ message: "Successfully connected to server" });
+  return res.status(200).json({
+    message: `Successfully connected to server ${process.env.DB_USER}`,
+  });
 });
 
 app.listen(port, () => {

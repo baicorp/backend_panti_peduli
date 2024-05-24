@@ -46,7 +46,7 @@ export const addNewProfile = (req, res) => {
   // req image
   const img = req.files.image;
   const imgName = `${Date.now()}-${img.name}`;
-  img.mv(`./public/images/profile/${imgName}`);
+  // img.mv(`./public/images/profile/${imgName}`);
 
   // req body
   const {

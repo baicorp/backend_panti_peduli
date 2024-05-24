@@ -67,7 +67,7 @@ export const addNewArticle = (req, res) => {
     author,
     description,
     user_id: user_id,
-    image: "imgName",
+    image: imgName,
   };
 
   const imgErrorMsg =

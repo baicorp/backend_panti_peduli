@@ -54,8 +54,8 @@ export const getArticleById = (req, res) => {
 
 export const addNewArticle = (req, res) => {
   // req image
-  const img = req.files.image;
-  const imgName = `${Date.now()}-${img.name}`;
+  // const img = req.files.image;
+  // const imgName = `${Date.now()}-${img.name}`;
   // img.mv(`./public/images/article/${imgName}`);
 
   // req body
@@ -67,7 +67,7 @@ export const addNewArticle = (req, res) => {
     author,
     description,
     user_id: user_id,
-    image: imgName,
+    image: `${Date.now()}-image123.jpg`,
   };
 
   const imgErrorMsg =

@@ -44,8 +44,8 @@ export const getProfileByUserId = (req, res) => {
 
 export const addNewProfile = (req, res) => {
   // req image
-  const img = req.files.image;
-  const imgName = `${Date.now()}-${img.name}`;
+  // const img = req.files.image;
+  // const imgName = `${Date.now()}-${img.name}`;
   // img.mv(`./public/images/profile/${imgName}`);
 
   // req body
@@ -92,7 +92,7 @@ export const addNewProfile = (req, res) => {
     jumlah_anakpr,
     jumlah_anak,
     user_id,
-    image: imgName,
+    image: `${Date.now()}-image123.jpg`,
   };
 
   const imgErrorMsg =

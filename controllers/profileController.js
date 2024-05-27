@@ -256,7 +256,7 @@ export const addCertificate = (req, res) => {
 };
 
 export const getPorfileByLoc = (req, res) => {
-  const { lokasi } = req.query;
+  let { lokasi } = req.query;
 
   if (lokasi === "") {
     const sql = "SELECT * FROM profile";
@@ -268,8 +268,9 @@ export const getPorfileByLoc = (req, res) => {
     });
   } else {
     // Menggunakan parameterized query untuk mencegah SQL injection
-    const sql = "SELECT * FROM profile WHERE kabupaten = ?";
+    const sql = "SELECT * FROM profile WHERE kabupaten LIKE ?";
 
+    lokasi = `%${lokasi}%`;
     db.query(sql, [lokasi], (err, data) => {
       // return data or error msg
       return !err

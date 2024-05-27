@@ -70,10 +70,11 @@ export const addNewArticle = (req, res) => {
     image: `${Date.now()}-image123.jpg`,
   };
 
-  const imgErrorMsg =
-    !req.files || Object.keys(req.files).length === 0
-      ? "No files were uploaded."
-      : null;
+  // const imgErrorMsg =
+  //   !req.files || Object.keys(req.files).length === 0
+  //     ? "No files were uploaded."
+  //     : null;
+  const imgErrorMsg = false;
 
   if (imgErrorMsg) {
     return res.status(400).json({ imgErrorMsg });
